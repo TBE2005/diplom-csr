@@ -31,8 +31,7 @@ jobs:
     - name: Build
       env:
         VITE_CONVEX_URL: https://cool-goldfish-200.convex.cloud
-        CONVEX_DEPLOY_KEY: prod:cool-goldfish-200|eyJ2MiI6ImY0ZWM2YjhiNWNlNjQ4ZTI5MzFmYzg4YzJhNWE2NzlhIn0=
-      run: npx convex deploy --cmd 'npm run build' --cmd-url-env-var-name VITE_CONVEX_URL
+      run: npm run build
 
     - name: Setup Pages
       uses: actions/configure-pages@v4

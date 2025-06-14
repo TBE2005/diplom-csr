@@ -73,9 +73,10 @@ createRoot(document.getElementById('root')!).render(
       <MantineProvider>
         <ModalsProvider>
           <Notifications />
-          <ConvexProvider client={convex}> <RouterProvider router={router} />
-          </ConvexProvider> 
-          </ModalsProvider>
+          <ConvexProvider client={convex}> 
+            <RouterProvider router={router} />
+          </ConvexProvider>
+        </ModalsProvider>
       </MantineProvider>
     </DirectionProvider>
   </StrictMode>,

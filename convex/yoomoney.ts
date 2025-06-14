@@ -18,7 +18,7 @@ export const callbackAuth = httpAction(async (ctx, request) => {
             access_token: data.access_token,
         });
 
-        if (!user) {
+        if (!user.access_token) {
             await ctx.runMutation(api.user.create, {
                 access_token: data.access_token,
             });

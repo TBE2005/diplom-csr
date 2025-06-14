@@ -2,6 +2,7 @@ import { httpRouter } from "convex/server";
 import { callbackAuth, payment } from "./yoomoney";
 import { httpAction } from "./_generated/server";
 import { FRONT_URL } from '../urls.ts'
+import { api } from "./_generated/api";
 
 const http = httpRouter();
 
@@ -16,6 +17,32 @@ http.route({
   method: "POST",
   handler: payment,
 });
+
+
+http.route({
+  path: "/user/getByAccessToken",
+  method: "GET",
+  handler: httpAction(async (ctx, request) => {
+    const url = new URL(request.url);
+    const access_token = url.searchParams.get("access_token");
+    const response = await fetch("https://yoomoney.ru/api/account-info", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${access_token}`,
+      },
+    });
+    const user = await response.json();
+    const userData = await ctx.runQuery(api.user.getUserByAccessToken, { access_token: access_token! });
+    if (userData?._id) {
+      return new Response(JSON.stringify({
+        ...user,
+        ...userData,
+      }), { status: 200, headers: new Headers({ "Content-Type": "application/json", "Access-Control-Allow-Origin": "https://diplom-five-khaki.vercel.app", "Access-Control-Allow-Methods": "GET, POST, OPTIONS", "Access-Control-Allow-Headers": "Content-Type, Authorization" }) });
+    }
+    return new Response(JSON.stringify({ error: "User not found" }), { status: 404, headers: new Headers({ "Content-Type": "application/json", "Access-Control-Allow-Origin": "https://diplom-five-khaki.vercel.app", "Access-Control-Allow-Methods": "GET, POST, OPTIONS", "Access-Control-Allow-Headers": "Content-Type, Authorization" }) });
+  }),
+});
+
 
 // Обработка preflight OPTIONS-запроса
 http.route({

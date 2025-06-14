@@ -14,7 +14,7 @@ export default function Layout() {
         localStorage.setItem("access_token", paramsObject.access_token)
         navigate('/dashboard')
       } else if (localStorage.getItem("access_token")) {
-        const res = await fetch("https://cool-goldfish-200.convex.cloud/user/getByAccessToken" + new URLSearchParams({
+        const res = await fetch("https://cool-goldfish-200.convex.cloud/user/getByAccessToken?" + new URLSearchParams({
           access_token: String(localStorage.getItem("access_token"))
         }), {
           method: "GET",

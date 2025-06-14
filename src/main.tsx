@@ -25,7 +25,13 @@ import { ModalsProvider } from '@mantine/modals';
 
 import { ConvexProvider, ConvexReactClient } from "convex/react";
 
-const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL || 'https://cool-goldfish-200.convex.cloud');
+const CONVEX_URL = import.meta.env.VITE_CONVEX_URL || 'https://cool-goldfish-200.convex.cloud';
+
+if (!CONVEX_URL) {
+  throw new Error('VITE_CONVEX_URL environment variable is not set');
+}
+
+const convex = new ConvexReactClient(CONVEX_URL);
 
 const router = createBrowserRouter([
   {

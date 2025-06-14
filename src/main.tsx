@@ -7,12 +7,9 @@ import './index.css'
 import Layout from './components/Layout'
 
 // Pages
-import Home from './pages/Home'
-import About from './pages/About'
-import Contact from './pages/Contact'
-import Users from './pages/Users'
-import Profile from './pages/Profile'
 import NotFound from './pages/NotFound'
+import Landing from './pages/Landing'
+import DashboardLayout from './components/DashboardLayout'
 
 const router = createBrowserRouter([
   {
@@ -22,24 +19,18 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />
+        element: <Landing />
       },
       {
-        path: 'about',
-        element: <About />
+        path: 'dashboard',
+        element: <DashboardLayout />,
+        children: [
+          {
+            index: true,
+            element: <Landing />
+          },
+        ]
       },
-      {
-        path: 'contact',
-        element: <Contact />
-      },
-      {
-        path: 'users',
-        element: <Users />
-      },
-      {
-        path: 'profile/:userId',
-        element: <Profile />
-      }
     ]
   },
   {

@@ -1,18 +1,6 @@
 import { useLayoutEffect } from 'react'
 import { Outlet, useNavigate, useSearchParams } from 'react-router'
 
-import '@mantine/core/styles.css';
-import '@mantine/notifications/styles.css';
-import '@mantine/carousel/styles.css';
-
-import { DirectionProvider, MantineProvider } from "@mantine/core";
-import { Notifications } from '@mantine/notifications';
-import { ModalsProvider } from '@mantine/modals';
-
-import { ConvexProvider, ConvexReactClient } from "convex/react";
-
-const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
-
 export default function Layout() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
@@ -43,14 +31,5 @@ export default function Layout() {
     }
     detect()
   }, [searchParams])
-  return <DirectionProvider>
-    <MantineProvider>
-      <ModalsProvider>
-        <Notifications />
-        <ConvexProvider client={convex}>
-          <Outlet />
-        </ConvexProvider>
-      </ModalsProvider>
-    </MantineProvider>
-  </DirectionProvider>
+  return <Outlet />
 }

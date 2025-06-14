@@ -25,7 +25,7 @@ import { ModalsProvider } from '@mantine/modals';
 
 import { ConvexProvider, ConvexReactClient } from "convex/react";
 
-const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
+const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL!);
 
 const router = createBrowserRouter([
   {

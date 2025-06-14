@@ -1,6 +1,31 @@
-# React + TypeScript + Vite
+# Diplom CSR - React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is built with React, TypeScript, and Vite, configured for deployment to GitHub Pages.
+
+## Development
+
+```bash
+npm install
+npm run dev
+```
+
+## Deployment to GitHub Pages
+
+This project is configured for automatic deployment to GitHub Pages using GitHub Actions.
+
+### Automatic Deployment
+- Push to `main` branch triggers automatic deployment
+- The site will be available at: `https://[your-username].github.io/diplom-csr/`
+
+### Manual Deployment
+```bash
+npm run deploy
+```
+
+## Build
+```bash
+npm run build
+```
 
 Currently, two official plugins are available:
 

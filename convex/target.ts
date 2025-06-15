@@ -37,14 +37,16 @@ export const getById = query({
 
 export const create = mutation({
     args: {
-        userId: v.id("users"),
+        access_token: v.string(),
     },
     handler: async (ctx, args) => {
+        const user = await ctx.db.query("users").filter(q => q.eq(q.field("access_token"), args.access_token)).first()
+
         await ctx.db.insert("targets", {
             name: "Новая цель",
             collected: 10,
             total: 100,
-            userId: args.userId,
+            userId: user?._id!,
         });
     },
 });
@@ -57,16 +59,18 @@ export const update = mutation({
         total: v.number(),
         goalId: v.id("goals"),
         alertId: v.id("alerts"),
-        userId: v.id("users"),
+        access_token: v.string(),
     },
     handler: async (ctx, args) => {
+        const user = await ctx.db.query("users").filter(q => q.eq(q.field("access_token"), args.access_token)).first()
+
         await ctx.db.patch(args.id, {
             name: args.name,
             collected: args.collected,
             total: args.total,
             goalId: args.goalId,
             alertId: args.alertId,
-            userId: args.userId,
+            userId: user?._id!,
         });
     },
 });

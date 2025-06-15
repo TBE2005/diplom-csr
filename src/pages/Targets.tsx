@@ -22,10 +22,10 @@ export default function Targets() {
         access_token: localStorage.getItem("access_token") as string
     });
     const alerts = useQuery(api.alert.getByUser, {
-        access_token: localStorage.getItem("user_id") as string
+        access_token: localStorage.getItem("access_token") as string
     });
     const goals = useQuery(api.goal.getByUser, {
-        access_token: localStorage.getItem("user_id") as string
+        access_token: localStorage.getItem("access_token") as string
     });
 
     const allTargets = useQuery(api.target.getAll);
@@ -40,7 +40,7 @@ export default function Targets() {
     return (
         <>
             <Button onClick={() => createTarget({
-                userId: localStorage.getItem("user_id") as Id<"users">
+                access_token: localStorage.getItem("access_token") as Id<"users">
             })}>Новая цель</Button>
             <Tabs defaultValue="all" mt={'md'}>
                 <Tabs.List>
@@ -145,7 +145,7 @@ function GoalCard(initialValues: Doc<"targets"> & { alerts: Doc<"alerts">[], goa
                         total: debouncedValues.total,
                         goalId: debouncedValues.goalId as Id<"goals">,
                         alertId: debouncedValues.alertId as Id<"alerts">,
-                        userId: localStorage.getItem("user_id") as Id<"users">
+                        access_token: localStorage.getItem("access_token") as string
                     });
                     notifications.show({
                         title: "Цель обновлена",

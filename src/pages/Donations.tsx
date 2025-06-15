@@ -3,11 +3,10 @@ import { Card, Text, Group, Badge, Stack, Container, Title, Divider, Loader, Cen
 import { FaMoneyBillWave } from "react-icons/fa";
 import { Tabs } from '@mantine/core';
 import { api } from "../../convex/_generated/api";
-import type { Id } from "../../convex/_generated/dataModel";
 
 export default function Donations() {
-    const myDonations = useQuery(api.donation.getMyDonations, { fromUserId: localStorage.getItem("user_id") as Id<"users"> });
-    const myDonationsTo = useQuery(api.donation.getMyDonationsTo, { toUserId: localStorage.getItem("user_id") as Id<"users"> });
+    const myDonations = useQuery(api.donation.getMyDonations, { access_token: localStorage.getItem("access_token") as string });
+    const myDonationsTo = useQuery(api.donation.getMyDonationsTo, { access_token: localStorage.getItem("access_token") as string });
     if (!myDonations) {
         return <Center>
             <Loader />

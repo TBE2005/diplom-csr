@@ -26,11 +26,13 @@ export const create = mutation({
 
 export const getMyDonations = query({
     args: {
-        fromUserId: v.id("users"),
+        access_token: v.string(),
     },
     handler: async (ctx, args) => {
+        const user = await ctx.db.query("users").filter(q => q.eq(q.field("access_token"), args.access_token)).first()
+
         // donations with target
-        const donations = await ctx.db.query("donations").filter(q => q.eq(q.field("fromUserId"), args.fromUserId)).collect();
+        const donations = await ctx.db.query("donations").filter(q => q.eq(q.field("fromUserId"), user?._id)).collect();
         const targets = await ctx.db.query("targets").collect();
         const users = await ctx.db.query("users").collect();
         return donations.map(donation => ({
@@ -43,11 +45,13 @@ export const getMyDonations = query({
 
 export const getMyDonationsTo = query({
     args: {
-        toUserId: v.id("users"),
+        access_token: v.string(),
     },
     handler: async (ctx, args) => {
-        const donations = await ctx.db.query("donations").filter(q => q.eq(q.field("toUserId"), args.toUserId)).collect();
-        const targets = await ctx.db.query("targets").filter(q => q.eq(q.field("userId"), args.toUserId)).collect();
+        const user = await ctx.db.query("users").filter(q => q.eq(q.field("access_token"), args.access_token)).first()
+
+        const donations = await ctx.db.query("donations").filter(q => q.eq(q.field("toUserId"), user?._id)).collect();
+        const targets = await ctx.db.query("targets").filter(q => q.eq(q.field("userId"), user?._id)).collect();
         const users = await ctx.db.query("users").collect();
         return donations.map(donation => ({
             ...donation,

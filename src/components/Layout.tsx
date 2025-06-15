@@ -15,7 +15,10 @@ export default function Layout() {
         location.pathname.includes('alert/') ||
         location.pathname.includes('goal/') ||
         (location.pathname !== '/' && location.pathname.split('/').length === 2 && location.pathname !== '/dashboard')
-      if (!isSpecialPage) return
+      
+      if (isSpecialPage) {
+        return
+      }
       if (hasParams && paramsObject.access_token) {
         localStorage.setItem("access_token", paramsObject.access_token)
         window.location.href = 'https://tbe2005.github.io/diplom-csr/?/dashboard'

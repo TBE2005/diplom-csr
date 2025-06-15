@@ -9,10 +9,10 @@ import { Outlet, useLocation } from 'react-router';
 import { NavLink as Link } from 'react-router';
 
 const links = [
-    { label: 'Цели', href: '/dashboard', isIndex: true },
-    { label: 'Донаты', href: '/dashboard/donations', isIndex: false },
-    { label: 'Сборы', href: '/dashboard/goals', isIndex: false },
-    { label: 'Оповещения', href: '/dashboard/alerts', isIndex: false },
+    { label: 'Цели', href: '/dashboard' },
+    { label: 'Донаты', href: '/dashboard/donations' },
+    { label: 'Сборы', href: '/dashboard/goals' },
+    { label: 'Оповещения', href: '/dashboard/alerts' },
 ]
 
 
@@ -20,7 +20,6 @@ export default function DashboardContent() {
     const location = useLocation();
     const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
     const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
-    console.log(location)
     const user = useQuery(api.user.getUserByAccessToken, {
         access_token: localStorage.getItem('access_token') as string
     });
@@ -80,16 +79,16 @@ export default function DashboardContent() {
                     <TextInput {...form.getInputProps("name")} />
                 </Group>
                 {links.map((link) => (
-                    <NavLink 
-                        label={link.label} 
-                        to={link.href} 
-                        component={Link} 
-                        key={link.href} 
+                    <NavLink
+                        label={link.label}
+                        to={link.href}
+                        component={Link}
+                        key={link.href}
                         active={
-                            link.isIndex 
-                                ? location.pathname === '/dashboard' 
+                            link.href === '/dashboard' 
+                                ? location.pathname === '/dashboard'
                                 : location.pathname === link.href
-                        } 
+                        }
                     />
                 ))}
             </AppShell.Navbar>

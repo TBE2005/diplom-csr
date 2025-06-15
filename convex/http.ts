@@ -25,12 +25,6 @@ http.route({
   handler: httpAction(async (ctx, request) => {
     const url = new URL(request.url);
     const access_token = url.searchParams.get("access_token");
-    await fetch("https://yoomoney.ru/api/account-info", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${access_token}`,
-      },
-    });
     const userData = await ctx.runQuery(api.user.getUserByAccessToken, { access_token: access_token! });
     console.log(userData)
     if (userData?.user?._id) {

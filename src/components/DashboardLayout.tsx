@@ -32,6 +32,11 @@ export default function DashboardContent() {
             name: user?.user?.name || '',
         },
     });
+    useEffect(() => {
+        if (user?.user?.name) {
+            form.setValues({ name: user?.user?.name });
+        }
+    }, [user?.user?.name]);
 
     const [debouncedValues] = useDebouncedValue(form.values, 500);
 

@@ -11,17 +11,12 @@ export const create = mutation({
     },
     handler: async (ctx, args) => {
         const user = await ctx.db.query("users").filter(q => q.eq(q.field("access_token"), args.access_token)).first()
-        console.log('@', user)
-        
-        if (!user) {
-            throw new Error("User not found for the provided access token");
-        }
-        
+
         await ctx.db.insert("donations", {
             amount: args.amount,
             message: args.message,
             targetId: args.targetId,
-            fromUserId: user._id,
+            fromUserId: user?._id!,
             toUserId: args.toUserId,
         });
 

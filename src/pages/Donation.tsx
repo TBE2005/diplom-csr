@@ -29,20 +29,20 @@ export default function Donation() {
 
     const handlePayment = async (values: typeof form.values) => {
         try {
-            const paymentResult = await fetch("https://cool-goldfish-200.convex.site/payment", {
-                method: "POST",
-                body: JSON.stringify({
-                    amount: values.amount,
-                    comment: values.message,
-                    targetAccount: user.account,
-                    access_token: localStorage.getItem("access_token") as string,
-                })
-            });
+            // const paymentResult = await fetch("https://cool-goldfish-200.convex.site/payment", {
+            //     method: "POST",
+            //     body: JSON.stringify({
+            //         amount: values.amount,
+            //         comment: values.message,
+            //         targetAccount: user.account,
+            //         access_token: localStorage.getItem("access_token") as string,
+            //     })
+            // });
 
-            const paymentData = await paymentResult.json();
-            if (!paymentData || paymentData.error) {
-                throw new Error(paymentData?.error?.message || "Payment failed");
-            }
+            // const paymentData = await paymentResult.json();
+            // if (!paymentData || paymentData.error) {
+            //     throw new Error(paymentData?.error?.message || "Payment failed");
+            // }
 
             await createDonation({
                 amount: values.amount,

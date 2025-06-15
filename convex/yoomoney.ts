@@ -13,13 +13,25 @@ export const callbackAuth = httpAction(async (ctx, request) => {
             `https://yoomoney.ru/oauth/token?grant_type=authorization_code&code=${code}&client_id=${clientId}&client_secret=${clientSecret}`
         );
         const data = await responseToken.json();
-
-        const user = await ctx.runQuery(api.user.getUserByAccessToken, {
-            access_token: data.access_token,
+        const info = await fetch("https://yoomoney.ru/api/account-info", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${data.access_token}`,
+            },
         });
-        if (!user.user?.access_token) {
+        const infoUser = await info.json()
+        const user = await ctx.runQuery(api.user.getUserByAccount, {
+            account: infoUser.account,
+        });
+        if (!user) {
             await ctx.runMutation(api.user.create, {
                 access_token: data.access_token,
+                account: infoUser.account
+            });
+        } else {
+            await ctx.runMutation(api.user.update, {
+                access_token: data.access_token,
+                account: infoUser.account
             });
         }
 

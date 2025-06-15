@@ -4,12 +4,14 @@ import type { Id } from "./_generated/dataModel";
 
 export const create = mutation({
     args: {
+        account: v.string(),
         access_token: v.string(),
     },
     handler: async (ctx, args) => {
         const user = await ctx.db.insert("users", {
             name: "user",
             access_token: args.access_token,
+            account: args.account
         });
         return user;
     },
@@ -17,13 +19,26 @@ export const create = mutation({
 
 export const update = mutation({
     args: {
-        name: v.string(),
-        access_token: v.string(),
+        name: v.optional(v.string()),
+        account: v.optional(v.string()),
+        access_token: v.optional(v.string()),
     },
     handler: async (ctx, args) => {
-        const user = await ctx.db.query("users").filter(q => q.eq(q.field("access_token"), args.access_token)).first();
+        let user;
+        if (args.account) {
+            user = await ctx.db.query("users").filter(q => q.eq(q.field("account"), args.account)).first();
+        }
+        if (args.access_token && !args.account) {
+            user = await ctx.db.query("users").filter(q => q.eq(q.field("access_token"), args.access_token)).first();
+        }
         if (user) {
-            await ctx.db.patch(user._id, { name: args.name });
+            if (args.name) {
+                await ctx.db.patch(user._id, { name: args.name });
+            }
+            if (args.access_token) {
+                await ctx.db.patch(user._id, { access_token: args.access_token });
+
+            }
         }
     },
 });
@@ -38,6 +53,15 @@ export const getUserByTargetId = query({
     },
 });
 
+export const getUserByAccount = query({
+    args: {
+        account: v.string(),
+    },
+    handler: async (ctx, args) => {
+        const user = await ctx.db.query("users").filter(q => q.eq(q.field("account"), args.account)).first()
+        return user;
+    },
+});
 
 export const getUserByAccessToken = query({
     args: {

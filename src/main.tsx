@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { createBrowserRouter, Outlet, RouterProvider } from 'react-router'
+import { createBrowserRouter, RouterProvider } from 'react-router'
 
 // Layout
 import Layout from './components/Layout'
@@ -68,20 +68,15 @@ const router = createBrowserRouter([
       },
       {
         path: ":id",
-        element: <Outlet />,
-        children: [
-          {
-            index: true,
-            element: <Donation />
-          },
-          {
-            path: "alert",
-            element: <AlertWidget />
-          }, {
-            path: "goal",
-            element: <GoalWidget />
-          },
-        ]
+        element: <Donation />
+      },
+      {
+        path: ":id/alert",
+        element: <AlertWidget />
+      },
+      {
+        path: ":id/goal",
+        element: <GoalWidget />
       }
     ]
   },

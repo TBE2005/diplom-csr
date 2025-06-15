@@ -12,8 +12,8 @@ export default function Layout() {
     async function detect() {
       // Проверяем, находимся ли мы на специальных страницах, которые не должны редиректить
       const isSpecialPage = location.pathname.includes('/dashboard') ||
-        location.pathname.startsWith('/alert/') ||
-        location.pathname.startsWith('/goal/') ||
+        location.pathname.includes('alert/') ||
+        location.pathname.includes('goal/') ||
         (location.pathname !== '/' && location.pathname.split('/').length === 2 && location.pathname !== '/dashboard')
 
 

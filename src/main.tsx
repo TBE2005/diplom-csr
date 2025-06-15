@@ -71,11 +71,11 @@ const router = createBrowserRouter([
         element: <Donation />
       },
       {
-        path: ":id/alert",
+        path: "alert/:id",
         element: <AlertWidget />
       },
       {
-        path: ":id/goal",
+        path: "goal/:id",
         element: <GoalWidget />
       }
     ]

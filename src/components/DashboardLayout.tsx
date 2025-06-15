@@ -84,11 +84,7 @@ export default function DashboardContent() {
                         to={link.href}
                         component={Link}
                         key={link.href}
-                        active={
-                            link.href === '/dashboard' 
-                                ? location.pathname === '/dashboard'
-                                : location.pathname === link.href
-                        }
+                        active={location.pathname === link.href}
                     />
                 ))}
             </AppShell.Navbar>

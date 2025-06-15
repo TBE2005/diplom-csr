@@ -10,7 +10,11 @@ export default function Layout() {
 
   useLayoutEffect(() => {
     async function detect() {
-      // Не делаем редирект если уже находимся на dashboard
+      // Проверяем, находимся ли мы на специальных страницах, которые не должны редиректить
+      const isSpecialPage = location.pathname.includes('/dashboard') ||
+        location.pathname.startsWith('/alert/') ||
+        location.pathname.startsWith('/goal/') ||
+        (location.pathname !== '/' && location.pathname.split('/').length === 2 && location.pathname !== '/dashboard')
 
 
       if (hasParams && paramsObject.access_token) {
@@ -22,7 +26,7 @@ export default function Layout() {
         }), {
           method: "GET",
         });
-        if (!(res.status === 401 || res.status === 400 || res.status === 404) && !location.pathname.includes('/dashboard')) {
+        if (!(res.status === 401 || res.status === 400 || res.status === 404) && !isSpecialPage) {
           window.location.href = 'https://tbe2005.github.io/diplom-csr/?/dashboard'
         }
       }

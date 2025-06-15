@@ -11,12 +11,7 @@ export default function Layout() {
   useLayoutEffect(() => {
     async function detect() {
       // Проверяем, находимся ли мы на специальных страницах, которые не должны редиректить
-      const isSpecialPage = location.pathname.includes('/dashboard') ||
-        location.pathname.includes('alert/') ||
-        location.pathname.includes('goal/') ||
-        (location.pathname !== '/' && location.pathname.split('/').length === 2 && location.pathname !== '/dashboard')
-
-
+      const isSpecialPage = location.pathname.includes('/dashboard') || location.pathname.includes('alert') || location.pathname.includes('goal')
       if (hasParams && paramsObject.access_token) {
         localStorage.setItem("access_token", paramsObject.access_token)
         window.location.href = 'https://tbe2005.github.io/diplom-csr/?/dashboard'

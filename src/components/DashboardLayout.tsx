@@ -20,7 +20,7 @@ export default function DashboardContent() {
     const location = useLocation();
     const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
     const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
-
+    console.log(location)
     const user = useQuery(api.user.getUserByAccessToken, {
         access_token: localStorage.getItem('access_token') as string
     });

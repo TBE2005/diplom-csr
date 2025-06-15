@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router'
+import { createBrowserRouter, Outlet, RouterProvider } from 'react-router'
 
 // Layout
 import Layout from './components/Layout'
@@ -24,6 +24,9 @@ import { Notifications } from '@mantine/notifications';
 import { ModalsProvider } from '@mantine/modals';
 
 import { ConvexProvider, ConvexReactClient } from "convex/react";
+import Donation from './pages/Donation'
+import GoalWidget from './pages/GoalWidget'
+import AlertWidget from './pages/AlertWidget'
 
 const CONVEX_URL = import.meta.env.VITE_CONVEX_URL || 'https://cool-goldfish-200.convex.cloud';
 
@@ -63,6 +66,23 @@ const router = createBrowserRouter([
           },
         ]
       },
+      {
+        path: ":id",
+        element: <Outlet />,
+        children: [
+          {
+            index: true,
+            element: <Donation />
+          },
+          {
+            path: "alert",
+            element: <AlertWidget />
+          }, {
+            path: "goal",
+            element: <GoalWidget />
+          },
+        ]
+      }
     ]
   },
   {
@@ -80,8 +100,8 @@ createRoot(document.getElementById('root')!).render(
         <ModalsProvider>
           <Notifications />
           <ConvexProvider client={convex}> <RouterProvider router={router} />
-          </ConvexProvider> 
-          </ModalsProvider>
+          </ConvexProvider>
+        </ModalsProvider>
       </MantineProvider>
     </DirectionProvider>
   </StrictMode>,

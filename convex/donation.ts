@@ -6,15 +6,17 @@ export const create = mutation({
         amount: v.number(),
         message: v.string(),
         targetId: v.id("targets"),
-        fromUserId: v.id("users"),
+        access_token: v.string(),
         toUserId: v.id("users"),
     },
     handler: async (ctx, args) => {
+        const user = await ctx.db.query("users").filter(q => q.eq(q.field("access_token"), args.access_token)).first()
+
         await ctx.db.insert("donations", {
             amount: args.amount,
             message: args.message,
             targetId: args.targetId,
-            fromUserId: args.fromUserId,
+            fromUserId: user?._id!,
             toUserId: args.toUserId,
         });
 

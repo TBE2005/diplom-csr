@@ -49,7 +49,7 @@ export const getUserByAccessToken = query({
         const sum = targets.reduce((acc, target) => acc + target.collected, 0);
 
         return {
-            ...user,
+            user,
             targets,
             sum,
         };

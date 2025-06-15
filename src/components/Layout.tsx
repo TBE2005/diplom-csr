@@ -19,7 +19,7 @@ export default function Layout() {
         }), {
           method: "GET",
         });
-        if (res.status === 401 || res.status === 400) {
+        if (res.status === 401 || res.status === 400 || res.status === 404) {
           navigate('/')
         } else {
           navigate('/dashboard')

@@ -25,17 +25,16 @@ http.route({
   handler: httpAction(async (ctx, request) => {
     const url = new URL(request.url);
     const access_token = url.searchParams.get("access_token");
-    const response = await fetch("https://yoomoney.ru/api/account-info", {
+    await fetch("https://yoomoney.ru/api/account-info", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${access_token}`,
       },
     });
-    const user = await response.json();
     const userData = await ctx.runQuery(api.user.getUserByAccessToken, { access_token: access_token! });
-    if (userData?._id) {
+    console.log(userData)
+    if (userData?.user?._id) {
       return new Response(JSON.stringify({
-        ...user,
         ...userData,
       }), { status: 200, headers: new Headers({ "Content-Type": "application/json", "Access-Control-Allow-Origin": "https://diplom-five-khaki.vercel.app", "Access-Control-Allow-Methods": "GET, POST, OPTIONS", "Access-Control-Allow-Headers": "Content-Type, Authorization" }) });
     }

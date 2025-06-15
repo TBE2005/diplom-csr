@@ -29,14 +29,14 @@ export default function DashboardContent() {
 
     const form = useForm({
         initialValues: {
-            name: user?.name || '',
+            name: user?.user?.name || '',
         },
     });
 
     const [debouncedValues] = useDebouncedValue(form.values, 500);
 
     useEffect(() => {
-        if (user?._id && debouncedValues.name !== user?.name && debouncedValues.name !== '') {
+        if (user?.user?._id && debouncedValues.name !== user?.user.name && debouncedValues.name !== '') {
             updateUser({ access_token: localStorage.getItem('access_token') as string, name: debouncedValues.name });
             notifications.show({
                 title: "Успешно",

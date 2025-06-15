@@ -1,14 +1,20 @@
 import { useLayoutEffect } from 'react'
-import { Outlet, useSearchParams } from 'react-router'
+import { Outlet, useSearchParams, useLocation } from 'react-router'
 
 export default function Layout() {
   const [searchParams] = useSearchParams()
+  const location = useLocation()
   // Получаем все параметры как объект
   const paramsObject = Object.fromEntries(searchParams.entries())
   const hasParams = Object.keys(paramsObject).length > 0
 
   useLayoutEffect(() => {
     async function detect() {
+      // Не делаем редирект если уже находимся на dashboard
+      if (location.pathname.includes('/dashboard')) {
+        return
+      }
+
       if (hasParams && paramsObject.access_token) {
         localStorage.setItem("access_token", paramsObject.access_token)
         window.location.href = 'https://tbe2005.github.io/diplom-csr/?/dashboard'
@@ -24,6 +30,6 @@ export default function Layout() {
       }
     }
     detect()
-  }, [searchParams])
+  }, [searchParams, location.pathname])
   return <Outlet />
 }

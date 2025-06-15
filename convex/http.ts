@@ -30,7 +30,7 @@ http.route({
     if (userData?.user?._id) {
       return new Response(JSON.stringify({
         ...userData,
-      }), { status: 200, headers: new Headers({ "Content-Type": "application/json", "Access-Control-Allow-Origin": FRONT_URL, "Access-Control-Allow-Methods": "GET, POST, OPTIONS", "Access-Control-Allow-Headers": "Content-Type, Authorization" }) });
+      }), { status: 200, headers: new Headers({ "Content-Type": "application/json", "Access-Control-Allow-Origin": '*', "Access-Control-Allow-Methods": "GET, POST, OPTIONS", "Access-Control-Allow-Headers": "Content-Type, Authorization" }) });
     }
     return new Response(JSON.stringify({ error: "User not found" }), { status: 404, headers: new Headers({ "Content-Type": "application/json", "Access-Control-Allow-Origin": FRONT_URL, "Access-Control-Allow-Methods": "GET, POST, OPTIONS", "Access-Control-Allow-Headers": "Content-Type, Authorization" }) });
   }),

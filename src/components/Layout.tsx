@@ -12,7 +12,7 @@ export default function Layout() {
     async function detect() {
       if (hasParams && paramsObject.access_token) {
         localStorage.setItem("access_token", paramsObject.access_token)
-         navigate('dashboard')
+        navigate('/dashboard', { replace: true })
       } else if (localStorage.getItem("access_token")) {
         const res = await fetch("https://cool-goldfish-200.convex.site/user/getByAccessToken?" + new URLSearchParams({
           access_token: String(localStorage.getItem("access_token"))
@@ -20,15 +20,15 @@ export default function Layout() {
           method: "GET",
         });
         if (res.status === 401 || res.status === 400 || res.status === 404) {
-          navigate('.')
+          navigate('/', { replace: true })
         }else{
-          navigate('dashboard')
+          navigate('/dashboard', { replace: true })
         }
       } else {
-        navigate('.')
+        navigate('/', { replace: true })
       }
     }
     detect()
-  }, [searchParams])
+  }, [searchParams, navigate])
   return <Outlet />
 }

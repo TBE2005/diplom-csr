@@ -11,9 +11,7 @@ export default function Layout() {
   useLayoutEffect(() => {
     async function detect() {
       // Не делаем редирект если уже находимся на dashboard
-      if (location.pathname.includes('/dashboard')) {
-        return
-      }
+
 
       if (hasParams && paramsObject.access_token) {
         localStorage.setItem("access_token", paramsObject.access_token)
@@ -24,7 +22,7 @@ export default function Layout() {
         }), {
           method: "GET",
         });
-        if (!(res.status === 401 || res.status === 400 || res.status === 404)) {
+        if (!(res.status === 401 || res.status === 400 || res.status === 404) && !location.pathname.includes('/dashboard')) {
           window.location.href = 'https://tbe2005.github.io/diplom-csr/?/dashboard'
         }
       }

@@ -12,20 +12,16 @@ export default function Layout() {
     async function detect() {
       if (hasParams && paramsObject.access_token) {
         localStorage.setItem("access_token", paramsObject.access_token)
-        navigate('/dashboard', { replace: true })
+        navigate('dashboard', { replace: true })
       } else if (localStorage.getItem("access_token")) {
         const res = await fetch("https://cool-goldfish-200.convex.site/user/getByAccessToken?" + new URLSearchParams({
           access_token: String(localStorage.getItem("access_token"))
         }), {
           method: "GET",
         });
-        if (res.status === 401 || res.status === 400 || res.status === 404) {
-          navigate('/', { replace: true })
-        }else{
-          navigate('/dashboard', { replace: true })
+        if (!(res.status === 401 || res.status === 400 || res.status === 404)) {
+          navigate('dashboard', { replace: true })
         }
-      } else {
-        navigate('/', { replace: true })
       }
     }
     detect()

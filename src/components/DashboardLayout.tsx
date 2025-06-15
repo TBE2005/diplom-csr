@@ -9,10 +9,10 @@ import { Outlet, useLocation } from 'react-router';
 import { NavLink as Link } from 'react-router';
 
 const links = [
-    { label: 'Цели', href: '/dashboard' },
-    { label: 'Донаты', href: '/dashboard/donations' },
-    { label: 'Сборы', href: '/dashboard/goals' },
-    { label: 'Оповещения', href: '/dashboard/alerts' },
+    { label: 'Цели', href: '/dashboard', isIndex: true },
+    { label: 'Донаты', href: '/dashboard/donations', isIndex: false },
+    { label: 'Сборы', href: '/dashboard/goals', isIndex: false },
+    { label: 'Оповещения', href: '/dashboard/alerts', isIndex: false },
 ]
 
 
@@ -80,7 +80,17 @@ export default function DashboardContent() {
                     <TextInput {...form.getInputProps("name")} />
                 </Group>
                 {links.map((link) => (
-                    <NavLink label={link.label} to={link.href} component={Link} key={link.href} active={location.pathname === link.href} />
+                    <NavLink 
+                        label={link.label} 
+                        to={link.href} 
+                        component={Link} 
+                        key={link.href} 
+                        active={
+                            link.isIndex 
+                                ? location.pathname === '/dashboard' 
+                                : location.pathname === link.href
+                        } 
+                    />
                 ))}
             </AppShell.Navbar>
             <AppShell.Main>
